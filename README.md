@@ -18,7 +18,7 @@ Usage
 
 Start the repl for the uberrepl project.
 
-If you are following Stuart Sierra's workflow -- see [his blogpost](http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded) --, you will get a repl which has all the code for the subprojects symlinked and all the project bootstrapping functions are also available in your uberrepl: you may run them side by side while modifing their code using the same repl.
+If you are following Stuart Sierra's workflow -- see [his blogpost](http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded) and/or [Simon Katz's sample project](https://github.com/simon-katz/clojure-workflow-demo) --, you will get a repl which has all the code for the subprojects symlinked and all the project bootstrapping functions are also available in your uberrepl: you may run them side by side while modifing their code using the same repl.
 
 
 How it works
