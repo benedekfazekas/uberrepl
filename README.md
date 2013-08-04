@@ -24,7 +24,7 @@ If you are following Stuart Sierra's workflow -- see [his blogpost](http://think
 How it works
 ============
 
-The uberrepl project file will lein install the subprojects you symlinked. After that the user namespace will get loaded from the dev directory automatically. The uberrepl user namespace has some logic in its turn that finds and loads the subprojects' user namespaces.
+The uberrepl project file will lein install the subprojects symlinked. After that the user namespace will get loaded from the dev directory automatically. The uberrepl user namespace has some logic in its turn that finds and loads the subprojects' user namespaces. The uberrepl obviously exploits leiningen's checkout dependency feature.
 
 Possible problems
 =================
@@ -36,5 +36,4 @@ Todos
 
 - inspect project file in a proper way instead of regexp, use leiningen's project ns
 - put subproject dev dependencies on the classpath as well -- currenlty if user ns depends on dev profile dependencies uberrepl will fail to startup the subproject
-- inspecting user namespaces of subprojects: create functions to reset/restart all projects in uberrepl
 - create test projects: one of them simon katz's clojure-workflow-demo, other one proxying it? or a msg driven app and modify workflow-demo to be read only?

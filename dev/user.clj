@@ -20,5 +20,10 @@
     (load-file (str repl-file))
     (format "Project %s done.\n" project-path)))
 
+(defn run-all [prefix]
+    (->> (keys (ns-publics 'user))
+         (filter #(.startsWith (name %) prefix))
+         (map #(apply (eval %) {}))))
+
 (println)
 (println (apply str (map load-subproject-user subproject-dirs)))
