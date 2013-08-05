@@ -3,7 +3,7 @@
 
 (defn subproject-dependency [subproject-dir]
   (let [project-info (->> (slurp (str (.toString subproject-dir) "/project.clj"))
-                          (re-find #"defproject\s+([0-9a-z_-]+)\s+\"(.*)\"")
+                          (re-find #"defproject\s+([0-9a-z_-]+).+\"(.*)\".*")
                           reverse)
         project-name (symbol (second project-info))
         project-version (first project-info)]
