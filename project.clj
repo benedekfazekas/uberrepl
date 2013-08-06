@@ -1,26 +1,19 @@
 (def subproject-dirs
   (filter #(.isDirectory %) (.listFiles (clojure.java.io/file "checkouts"))))
 
-(defn subproject-dependency [subproject-dir]
-  (let [project-info (->> (slurp (str (.toString subproject-dir) "/project.clj"))
-                          (re-find #"defproject\s+([0-9a-z_-]+).+\"(.*)\".*")
-                          reverse)
-        project-name (symbol (second project-info))
-        project-version (first project-info)]
+(defn read-subproject [subproject-dir]
+  (let [subproject-file (str (.toString subproject-dir) "/project.clj")]
+    (leiningen.core.project/read subproject-file [:dev])))
+
+(def subprojects
+  (map read-subproject subproject-dirs))
+
+(clojure.walk/postwalk identity subprojects)
+
+(defn subproject-dependency [subproject]
+  (let [project-name (symbol (:name subproject))
+        project-version (:version subproject)]
     [project-name project-version]))
-
-(defn install-subproject [project-dir]
-  (let [path (.toString project-dir)
-        result (clojure.java.shell/sh "lein" "install" :dir path)]
-    (println (format "installing project %s" path))
-    (println (:out result))
-    (format "Result %s for project %s.\n"
-            (if (== 0 (:exit result))
-              "success"
-              "failure")
-            path)))
-
-(println (apply str "lein install results:\n\n" (map install-subproject subproject-dirs)))
 
 (defproject clj_uberrepl "0.0.1"
   :description "Provides repl to run all linked applications in"
@@ -30,6 +23,6 @@
   :dependencies ~(reduce conj
                          [['org.clojure/clojure "1.5.0"]
                           ['org.clojure/tools.nrepl "0.2.2"]]
-                         (map subproject-dependency subproject-dirs))
+                         (map subproject-dependency subprojects))
   :checkout-deps-shares [:source-paths :test-paths :resource-paths]
   :profiles {:dev {:source-paths ["dev"]}})
