@@ -34,5 +34,4 @@ Possible problems
 Todos
 =====
 
-- put subproject dev dependencies on the classpath as well -- currenlty if user ns depends on dev profile dependencies uberrepl will fail to startup the subproject
 - create test projects: one of them simon katz's clojure-workflow-demo, other one proxying it? or a msg driven app and modify workflow-demo to be read only?

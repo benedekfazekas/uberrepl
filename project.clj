@@ -26,14 +26,20 @@
         project-version (:version subproject)]
     [project-name project-version]))
 
+(defn subproject-dev-dependencies []
+  (->> (map #(-> (:profiles %) :dev :dependencies) subprojects)
+       (reduce concat)))
+
 (defproject clj_uberrepl "0.0.1"
-  :description "Provides repl to run all linked applications in"
-  :url "https://github.com/MailOnline/clj_uberrepl"
+  :description "Provides repl to run multiple, possible related projects in one repl"
+  :url "https://github.com/benedekfazekas/uberrepl"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies ~(reduce conj
-                         [['org.clojure/clojure "1.5.0"]
-                          ['org.clojure/tools.nrepl "0.2.2"]]
-                         (map subproject-dependency subprojects))
-  :checkout-deps-shares [:source-paths :test-paths :resource-paths ~(comp :dependencies :dev)]
+  :dependencies ~(reduce conj (reduce conj
+                                      [['org.clojure/clojure "1.5.0"]
+                                       ['org.clojure/tools.nrepl "0.2.2"]]
+                                      (map subproject-dependency subprojects))
+                         (subproject-dev-dependencies))
+  :checkout-deps-shares [:source-paths :test-paths :resource-paths
+                         ~(fn [p] (str (:root p) "/dev"))]
   :profiles {:dev {:source-paths ["dev"]}})
