@@ -8,7 +8,18 @@
 (def subprojects
   (map read-subproject subproject-dirs))
 
-(clojure.walk/postwalk identity subprojects)
+(defn install-subproject [project]
+  (let [path (:root project)
+        result (clojure.java.shell/sh "lein" "install" :dir path)]
+    (println (format "installing project %s" path))
+    (println (:out result))
+    (format "Result %s for project %s.\n"
+            (if (== 0 (:exit result))
+              "success"
+              "failure")
+            path)))
+
+(println (apply str "lein install results:\n\n" (map install-subproject subprojects)))
 
 (defn subproject-dependency [subproject]
   (let [project-name (symbol (:name subproject))
