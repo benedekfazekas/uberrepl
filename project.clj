@@ -37,6 +37,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies ~(reduce conj (reduce conj
                                       [['org.clojure/clojure "1.5.0"]
+                                       ['org.clojure/tools.namespace "0.2.4"]
                                        ['org.clojure/tools.nrepl "0.2.2"]]
                                       (map subproject-dependency subprojects))
                          (subproject-dev-dependencies))

@@ -1,4 +1,5 @@
-(ns user)
+(ns ^{:load false}
+    user)
 
 (def project-root
   (last (re-find #"(.*/)dev/user.clj"
