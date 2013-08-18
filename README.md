@@ -39,6 +39,11 @@ to start up your subprojects.
 
 While hacking on those projects keep repeating the above two functions calls in your repl to quickly refresh and restart your applications.
 
+Sample projects
+===============
+
+todo
+
 Rationals
 =========
 
