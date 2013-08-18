@@ -18,7 +18,6 @@
   (compojure.handler/site
    (routes
     (GET "/counter" request
-         (println "read: " counter)
          (str "" (counter-value counter)))
 
     (POST "/counter/inc" request
