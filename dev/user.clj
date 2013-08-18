@@ -5,9 +5,17 @@
             [clojure.walk :refer :all])
   (:import (java.io File) (java.util.regex Pattern)))
 
+;; configuration: depending on how you set up your subprojects
+
+(def project-repl-file-dir "project_repl")
+
+(def project-repl-ns-prefix "project-repl")
+
 (def startup-command-prefix "create-and-start-")
 
 (def shutdown-command-prefix "stop-")
+
+;; convenience methods for batch commands on all subprojects
 
 (defn run-all [prefix]
   (->> (keys (ns-refers 'user))
@@ -21,10 +29,12 @@
 (defn shutdown-all []
   (run-all shutdown-command-prefix))
 
+;; reset uberrepl and helpers
+
 (defn unmap-subproject-vars []
   (->> (ns-refers *ns*)
        (filter
-        #(.contains (.toString (second %)) "project-repl"))
+        #(.contains (.toString (second %)) project-repl-ns-prefix))
        (map first)
        (map (partial ns-unmap *ns*))
        (postwalk identity)))
@@ -41,7 +51,7 @@
              (map file-seq)
              (flatten)
              (filter #(and
-                       (.contains (.toString %) "project_repl")
+                       (.contains (.toString %) project-repl-file-dir)
                        (.isFile ^File %)))
              (map #(second (read-file-ns-decl %)))
              (map symbol))]
