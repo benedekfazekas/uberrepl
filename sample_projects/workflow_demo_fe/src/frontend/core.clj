@@ -29,6 +29,7 @@
   (compojure.handler/site
    (routes
     (GET "/" request
+         (println "frontend read")
          (let [counter (:body (client/get (str backend-url counter-endpoint)))]
            (render-page counter)))
 

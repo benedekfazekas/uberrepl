@@ -1,2 +1,2 @@
 (ns user
-  (:require [repl.backend :refer :all]))
+  (:require [project-repl.backend :refer :all]))

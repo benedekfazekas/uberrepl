@@ -1,48 +1,45 @@
-(ns repl.frontend
+(ns project-repl.backend
   "Tools for interactive development with the REPL. This file should
   not be included in a production build of the application."
   (:require
    [clojure.tools.namespace.repl :refer (refresh refresh-all)]
-   [frontend.system :as fes]))
+   [backend.system :as bes]))
 
-(def frontend-port
-  3000)
+(def backend-port
+  3001)
 
-(def backend-url
-  "http://localhost:3001")
-
-(def frontend-system
+(def backend-system
   "A Var containing an object representing the application under
   development."
   nil)
 
-(defn init-frontend
+(defn init-backend
   "Creates and initializes the system under development in the Var
   #'system."
   []
-  (alter-var-root #'frontend-system
-    (constantly (fes/create-dev-system frontend-port backend-url))))
+  (alter-var-root #'backend-system
+    (constantly (bes/create-dev-system backend-port))))
 
-(defn start-frontend
+(defn start-backend
   "Starts the system running, updates the Var #'system."
   []
-  (alter-var-root #'frontend-system fes/start))
+  (alter-var-root #'backend-system bes/start))
 
-(defn stop-frontend
+(defn stop-backend
   "Stops the system if it is currently running, updates the Var
   #'system."
   []
-  (alter-var-root #'frontend-system fes/stop))
+  (alter-var-root #'backend-system bes/stop))
 
-(defn go-frontend
+(defn go-backend
   "Initializes and starts the system running."
   []
-  (init-frontend)
-  (start-frontend)
+  (init-backend)
+  (start-backend)
   :ready)
 
-(defn reset-frontend
+(defn reset-backend
   "Stops the system, reloads modified source files, and restarts it."
   []
-  (stop-frontend)
-  (refresh :after 'repl.frontend/go-frontend))
+  (stop-backend)
+  (refresh :after 'project-repl.backend/go-backend))

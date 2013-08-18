@@ -42,5 +42,5 @@
                                       (map subproject-dependency subprojects))
                          (subproject-dev-dependencies))
   :checkout-deps-shares [:source-paths :test-paths :resource-paths
-                         ~(fn [p] (str (:root p) "/dev"))]
+                         ~(fn [p] (str (:root p) "/dev/project_repl"))]
   :profiles {:dev {:source-paths ["dev"]}})
