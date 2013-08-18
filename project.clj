@@ -30,6 +30,8 @@
   (->> (map #(-> (:profiles %) :dev :dependencies) subprojects)
        (reduce concat)))
 
+(println (slurp "bootstrap-msg.txt"))
+
 (defproject clj_uberrepl "0.0.1"
   :description "Provides repl to run multiple, possible related projects in one repl"
   :url "https://github.com/benedekfazekas/uberrepl"
@@ -42,5 +44,5 @@
                                       (map subproject-dependency subprojects))
                          (subproject-dev-dependencies))
   :checkout-deps-shares [:source-paths :test-paths :resource-paths
-                         ~(fn [p] (str (:root p) "/dev/project_repl"))]
+                         ~(fn [p] (str (:root p) "/dev"))]
   :profiles {:dev {:source-paths ["dev"]}})

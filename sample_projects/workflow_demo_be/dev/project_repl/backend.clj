@@ -31,7 +31,7 @@
   []
   (alter-var-root #'backend-system bes/stop))
 
-(defn go-backend
+(defn create-and-start-backend
   "Initializes and starts the system running."
   []
   (init-backend)

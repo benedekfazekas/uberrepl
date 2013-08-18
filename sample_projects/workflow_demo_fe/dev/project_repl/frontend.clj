@@ -34,7 +34,7 @@
   []
   (alter-var-root #'frontend-system fes/stop))
 
-(defn go-frontend
+(defn create-and-start-frontend
   "Initializes and starts the system running."
   []
   (init-frontend)
