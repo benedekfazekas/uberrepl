@@ -23,10 +23,10 @@
        (map #(apply (eval %) {}))
        (postwalk identity)))
 
-(defn startup-all []
+(defn uberrepl-startup-all []
   (run-all startup-command-prefix))
 
-(defn shutdown-all []
+(defn uberrepl-shutdown-all []
   (run-all shutdown-command-prefix))
 
 ;; reset uberrepl and helpers
@@ -63,7 +63,7 @@
   (load "user"))
 
 (defn uberrepl-reset []
-  (shutdown-all)
+  (uberrepl-shutdown-all)
   (refresh :after 'user/self-reload))
 
 (println "project repl files used: " (use-subproject-repl-files))

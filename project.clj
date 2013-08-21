@@ -32,7 +32,7 @@
 
 (println (slurp "bootstrap-msg.txt"))
 
-(defproject clj_uberrepl "0.0.1"
+(defproject clj_uberrepl "0.2.0"
   :description "Provides repl to run multiple, possible related projects in one repl"
   :url "https://github.com/benedekfazekas/uberrepl"
   :license {:name "Eclipse Public License"
