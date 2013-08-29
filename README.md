@@ -16,9 +16,9 @@ ln -s ../sample_projects/workflow_demo_fe
 Prerequisites
 =============
 
-Strictly speaking there is not much. But uberrepl assumes a few things. First of all it assumes that your subprojects are all created using the same template to support repl driven development. Meaning you have a dev directory which is only on the classpath for the dev profile and that you are using Stuart Sierra's workflow more or less: see [his blogpost](http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded) and/or [Simon Katz's sample project](https://github.com/simon-katz/clojure-workflow-demo). It also assumes that you create a repl namespace in a dedicated directory under dev directory which your user namespace uses in your projects. To set up your projects properly is no magic, please see sample projects for details.
+Strictly speaking there is not much. But uberrepl assumes a few things. First of all it assumes that your subprojects are all created using the same template to support repl driven development. Meaning you have a dev directory which is only on the classpath for the dev profile and that you are using Stuart Sierra's workflow more or less: see [his blogpost](http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded) and/or [Simon Katz's sample project](https://github.com/simon-katz/clojure-workflow-demo). It also assumes that you create a repl namespace in a dedicated directory under dev directory which your user namespace uses in your projects. To set up your projects properly is no magic, please see sample projects for details. Alternatively you can use [this](https://github.com/benedekfazekas/reloaded) leiningen template derived from Stuart Sierra's reloaded template to create your project initially. This template is uberrepl compliant out of the box.
 
-If your subprojects are set up properly but somewhat differently than the sample projects you might need to tweak the variables in dev/user.clj to point to the right directories in your subprojects. Same goes for the variables defining the prefixes for certain app manager functions in your subprojects.
+If your subprojects are set up properly but somewhat differently than the sample projects you might need to tweak the variables in `uberrepl/dev/user.clj` to point to the right directories in your subprojects. Same goes for the variables defining the prefixes for certain app manager functions in your subprojects.
 
 Usage
 =====
@@ -33,7 +33,7 @@ From that point use
 ```
 to refresh all the changed source files into your repl. Then run
 ```clojure
-(startup-all)
+(uberrepl-startup-all)
 ```
 to start up your subprojects.
 
@@ -42,7 +42,7 @@ While hacking on those projects keep repeating the above two functions calls in 
 Sample projects
 ===============
 
-todo
+See sample_projects directory.
 
 Rationals
 =========
@@ -63,7 +63,7 @@ Possible problems
 - if you use the project specific application manager functions in the uberrepl, specially the one which refreshes namespaces using tools.namespace you may end up in an inconsistent state in your uberrepl. That meanly happens if you change code in multiple subprojects but try to refresh/reset only one of them. Use uberrepl specific batch functions instead.
 - if your application shuts down slowly or fails to do so and uses a port to communicate it might still running when the new instance tries to bind on the given port. that results in a error and a lost reference to the running application in the uberrepl. make sure that your application shuts down properly and reasonbly quickly or run
 ```clojure
-(shutdown-all)
+(uberrepl-shutdown-all)
 ```
 before running
 ```clojure
@@ -72,5 +72,3 @@ before running
 
 Todos
 =====
-
-- create lein project template with appopriate files in dev directory (fork [reloaed](https://github.com/stuartsierra/reloaded))
