@@ -11,15 +11,19 @@
 
 (def project-repl-ns-prefix "project-repl")
 
-(def startup-command-prefix "create-and-start-")
+(def startup-command-prefix "create-and-start")
 
-(def shutdown-command-prefix "stop-")
+(def shutdown-command-prefix "stop")
 
 ;; convenience methods for batch commands on all subprojects
 
 (defn run-all [prefix]
-  (->> (keys (ns-refers 'user))
-       (filter #(.startsWith (name %) prefix))
+  (->> (filter #(.contains (name %) project-repl-ns-prefix) (loaded-libs))
+       (map ns-publics)
+       (apply merge-with (fn [v1 v2] [v1 v2]))
+       (filter #(.startsWith (name (first %)) prefix))
+       flatten
+       (remove symbol?)
        (map #(apply (eval %) {}))
        (postwalk identity)))
 
@@ -32,10 +36,7 @@
 ;; reset uberrepl and helpers
 
 (defn unmap-subproject-vars []
-  (->> (ns-refers *ns*)
-       (filter
-        #(.contains (.toString (second %)) project-repl-ns-prefix))
-       (map first)
+  (->> (filter #(.contains (name %) project-repl-ns-prefix) (loaded-libs))
        (map (partial ns-unmap *ns*))
        (postwalk identity)))
 
@@ -55,7 +56,7 @@
                        (.isFile ^File %)))
              (map #(second (read-file-ns-decl %)))
              (map symbol))]
-    (postwalk identity (map use subproject-repl-files))
+    (postwalk identity (map require subproject-repl-files))
     subproject-repl-files))
 
 (defn self-reload []

@@ -5,41 +5,41 @@
    [clojure.tools.namespace.repl :refer (refresh refresh-all)]
    [backend.system :as bes]))
 
-(def backend-port
+(def port
   3001)
 
-(def backend-system
+(def system
   "A Var containing an object representing the application under
   development."
   nil)
 
-(defn init-backend
+(defn init
   "Creates and initializes the system under development in the Var
   #'system."
   []
-  (alter-var-root #'backend-system
-    (constantly (bes/create-dev-system backend-port))))
+  (alter-var-root #'system
+    (constantly (bes/create-dev-system port))))
 
-(defn start-backend
+(defn start
   "Starts the system running, updates the Var #'system."
   []
-  (alter-var-root #'backend-system bes/start))
+  (alter-var-root #'system bes/start))
 
-(defn stop-backend
+(defn stop
   "Stops the system if it is currently running, updates the Var
   #'system."
   []
-  (alter-var-root #'backend-system bes/stop))
+  (alter-var-root #'system bes/stop))
 
-(defn create-and-start-backend
+(defn create-and-start
   "Initializes and starts the system running."
   []
-  (init-backend)
-  (start-backend)
+  (init)
+  (start)
   :ready)
 
-(defn reset-backend
+(defn reset
   "Stops the system, reloads modified source files, and restarts it."
   []
-  (stop-backend)
-  (refresh :after 'project-repl.backend/go-backend))
+  (stop)
+  (refresh :after 'project-repl.backend/create-and-start))

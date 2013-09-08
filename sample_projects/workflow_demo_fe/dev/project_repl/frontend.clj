@@ -5,44 +5,44 @@
    [clojure.tools.namespace.repl :refer (refresh refresh-all)]
    [frontend.system :as fes]))
 
-(def frontend-port
+(def port
   3000)
 
 (def backend-url
   "http://localhost:3001")
 
-(def frontend-system
+(def system
   "A Var containing an object representing the application under
   development."
   nil)
 
-(defn init-frontend
+(defn init
   "Creates and initializes the system under development in the Var
   #'system."
   []
-  (alter-var-root #'frontend-system
-    (constantly (fes/create-dev-system frontend-port backend-url))))
+  (alter-var-root #'system
+    (constantly (fes/create-dev-system port backend-url))))
 
-(defn start-frontend
+(defn start
   "Starts the system running, updates the Var #'system."
   []
-  (alter-var-root #'frontend-system fes/start))
+  (alter-var-root #'system fes/start))
 
-(defn stop-frontend
+(defn stop
   "Stops the system if it is currently running, updates the Var
   #'system."
   []
-  (alter-var-root #'frontend-system fes/stop))
+  (alter-var-root #'system fes/stop))
 
-(defn create-and-start-frontend
+(defn create-and-start
   "Initializes and starts the system running."
   []
-  (init-frontend)
-  (start-frontend)
+  (init)
+  (start)
   :ready)
 
-(defn reset-frontend
+(defn reset
   "Stops the system, reloads modified source files, and restarts it."
   []
-  (stop-frontend)
-  (refresh :after 'project-repl.frontend/go-frontend))
+  (stop)
+  (refresh :after 'project-repl.frontend/create-and-start))
