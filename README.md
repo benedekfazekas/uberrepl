@@ -32,13 +32,19 @@ From that point use
 ```clojure
 (uberrepl-reset)
 ```
-to refresh all the changed source files into your REPL. Then run
+to refresh all the changed source files into your REPL. This actually stops all subprojects, performs the refresh to reload changed source files and then starts up all the subprojects.
+
+You can also use
+```clojure
+(uberrepl-shutdown-all)
+```
+to stop all the subprojects and
 ```clojure
 (uberrepl-startup-all)
 ```
-to start up your subprojects.
+to start them.
 
-While hacking on those projects keep repeating the above two functions calls in your REPL to quickly refresh and restart your applications. Alternatively, if you use emacs, you can easily set up a keyboard shortcut to run these:
+While hacking on those projects keep repeating ```(uberrepl-reset)``` in your REPL to quickly refresh and restart your applications. Alternatively, if you use emacs, you can easily set up a keyboard shortcut to run these:
 
     (defun uberrepl-reset ()
       (interactive)
@@ -49,16 +55,6 @@ While hacking on those projects keep repeating the above two functions calls in 
       (nrepl-return))
 
     (global-set-key (kbd "C-c r") 'uberrepl-reset)
-
-    (defun uberrepl-start ()
-      (interactive)
-      (save-some-buffers)
-      (set-buffer "*nrepl*")
-      (goto-char (point-max))
-      (insert "(user/uberrepl-startup-all)")
-      (nrepl-return))
-
-    (global-set-key (kbd "C-c s") 'uberrepl-start)
 
 ## Prerequisites
 

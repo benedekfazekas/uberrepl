@@ -60,7 +60,8 @@
 
 (defn self-reload []
   (println "project vars unloaded: " (count (unmap-subproject-vars)))
-  (load "user"))
+  (load "user")
+  (uberrepl-startup-all))
 
 (defn uberrepl-reset []
   (uberrepl-shutdown-all)
