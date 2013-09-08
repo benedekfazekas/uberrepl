@@ -64,7 +64,9 @@ While hacking on those projects keep repeating the above two functions calls in 
 
 Strictly speaking there is not much. The idea of uberrepl (i.e. one REPL to work with multiple projects) works no matter how the subprojects are set up. Also this project gives you a REPL with all the code and dependencies of the symlinked subprojects on its classpath: a nice feature already. However, uberrepl assumes that the subprojects are using a particular flavor of [Stuart Sierra's reloaded](http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded) workflow. See the sample projects for details or you can use [this](https://github.com/benedekfazekas/reloaded) leiningen template derived from Stuart Sierra's reloaded template to create your project initially. This template is uberrepl compliant out of the box.
 
-The make an existing project reloaded workflow and uberrepl compliant is not difficult either. You basically have to do the following:
+### Make existing project to uberrepl and reloaded workflow compliant
+
+You basically have to do the following:
 - create a dev directory in your project which is only on the classpath for the dev profile
 - create an 'user' namespace in this dev directory
 - this 'user' namespace delegates the releoaded workflow style application manager functions to a namespace in a subdirectory of the dev directory
