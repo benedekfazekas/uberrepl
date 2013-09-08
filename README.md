@@ -68,8 +68,25 @@ The make an existing project reloaded workflow and uberrepl compliant is not dif
 - create a dev directory in your project which is only on the classpath for the dev profile
 - create an 'user' namespace in this dev directory
 - this 'user' namespace delegates the releoaded workflow style application manager functions to a namespace in a subdirectory of the dev directory
+- implement the project manager functions (see sample projects or [Simon Katz's sample project](https://github.com/simon-katz/clojure-workflow-demo) or the above blogpost by Stuart)
 
 If your projects already use the reloaded workflow all you need to do is move the app manager functions from the user namespace to a dedicated REPL namespace in a subdirectory of dev directory.
+
+You should end up with something like this:
+
+    your_project
+    ├── README.md
+    ├── epl-v10.html
+    ├── project.clj
+    ├── dev
+    │   └── user.clj
+    │   └── project_repl
+    │       └── your_project.clj
+    └── src
+        └── com
+            └── example
+                └── your_project.clj
+
 
 If your subprojects are set up properly but somewhat differently than the sample projects you might need to tweak the variables in `uberrepl/dev/user.clj` to point to the right directories in your subprojects. Same goes for the variables defining the prefixes for certain app manager functions in your subprojects.
 
