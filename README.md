@@ -6,7 +6,7 @@ REPL to work with multiple, possible related projects in one REPL.
 
 Uberrepl is not library. Rather, you clone this repository, and point it to your subprojects to get one REPL for all of them.
 
-To do this all you need to do is symlink those projects you want to work with in the checkouts directory. For example:
+All you need to do is symlink those projects you want to work with in the checkouts directory. For example:
 ```sh
 cd checkouts
 ln -s ../sample_projects/workflow_demo_be
